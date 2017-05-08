@@ -44,12 +44,23 @@ public class Main {
 	private static void periodic() {
 		generation++;
 		pesticideResearch();
+//		log();
 		pesticideSeason();
-		System.out.print("Survivors: " + pestList.size());
+		System.out.print("Generation: " + generation + "\tSurvivors: " + pestList.size());
 		checkEnd();
 		matingSeason();
 		carryingCapacity();
 		checkEnd();
+	}
+
+	private static void log() {
+		Logger.setNewDirectory(String.valueOf(generation));
+		String post = "";
+		for (Pest p : pestList) {
+			post = post + Arrays.toString(p.getDNA()) + "\n";
+		}
+		Logger.log("dna", post);
+		Logger.log("pesticide", Arrays.toString(pesticide.getTargetDNA()));
 	}
 
 	private static void pesticideSeason() {
@@ -69,8 +80,8 @@ public class Main {
 
 		killedByPesticide += pestsToRemoveList.size();
 
-		if (pestList.size() <= 0) {
-			System.out.println("OP");
+		if (generation != 0 && generation % Constants.RESEARCH_TIME == 0) {
+			researcher.setResearchSample(pestList);
 		}
 	}
 
@@ -111,7 +122,6 @@ public class Main {
 	private static void pesticideResearch() {
 		if (generation != 0 && generation % Constants.RESEARCH_TIME == 0) {
 			pesticide = researcher.developPesticide();
-			researcher.setResearchSample(pestList);
 		}
 	}
 
@@ -125,13 +135,16 @@ public class Main {
 			 * Original Carrying Capacity Equation
 			 *
 			 * 9^{\left(\frac{#}{\frac{C}{2}}-02\right)}
+			 * 
+			 * 100\log _2\left(\frac{x}{C}\right)
 			 */
 
-			if (randomize(60. * (Math.log((double) i / Constants.PEST_CARRYING_CAPACITY)) / (Math.log(2)))) {
+			// if (randomize(60. * (Math.log((double) i / Constants.PEST_CARRYING_CAPACITY)) /
+			// (Math.log(2)))) {
+			if (randomize(Math.sqrt((double) i - (0.7 * Constants.PEST_CARRYING_CAPACITY)))) {
 				/*
 				 * New Carrying Capacity Equation (custom by Andy =D)
 				 *
-				 * 100\log _2\left(\frac{x}{C}\right)
 				 */
 				pestsToRemoveList.add(pestList.get(i));
 			}
