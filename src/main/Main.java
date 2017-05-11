@@ -1,6 +1,9 @@
 package main;
 
 import java.util.*;
+import java.awt.*;
+
+import com.sun.prism.paint.Color;
 
 public class Main {
 
@@ -8,6 +11,7 @@ public class Main {
 	static ArrayList<Pest> pestList = new ArrayList<Pest>(Constants.STARTING_PEST_COUNT);
 	static Pesticide pesticide;
 	static Researcher researcher;
+	static Graphic graphic;
 	static int generation = 0;
 
 	static int killedByPesticide = 0;
@@ -39,6 +43,8 @@ public class Main {
 		pesticide = new Pesticide(new int[Constants.TARGET_DNA_LENGTH]);
 		researcher = new Researcher(pestList);
 		System.out.print(" "); // Ensures that the Console opens during runtime
+		
+		graphic = new Graphic();
 	}
 
 	private static void periodic() {
@@ -82,6 +88,18 @@ public class Main {
 
 		if (generation != 0 && generation % Constants.RESEARCH_TIME == 0) {
 			researcher.setResearchSample(pestList);
+		}
+		
+		//update graphic
+		int row = -1;
+		for(int i =0; i<pestList.size();i++){
+			if((i % Constants.MANUAL_JFRAME_WIDTH)==0)
+			{
+				row++;
+			}
+			//pestList.get(i); //adding shit later, this decides color
+			java.awt.Color color = java.awt.Color.GREEN;
+			graphic.paintPest(i-(Constants.MANUAL_JFRAME_WIDTH)*row,row,color);
 		}
 	}
 
@@ -165,5 +183,9 @@ public class Main {
 	public static boolean randomize(double percent) {
 		return randomize(percent, 100);
 	}
+	
+	
+	
+	
 
 }
