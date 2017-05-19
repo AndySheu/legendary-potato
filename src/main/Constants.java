@@ -13,6 +13,8 @@ public class Constants {
 	static final int MATING_CYCLES_PER_PESTICIDE_APPLICATION = 1;
 	static final int PEST_CAP = 25000;
 	static final int PEST_CARRYING_CAPACITY = 10000;
+	static final int REFRESH_DELAY = 1000;
+	static final int PEST_SIZE = 5;
 	
 	static final String LOGGER_LOCATION = "LoggerFiles";
 }

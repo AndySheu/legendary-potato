@@ -1,6 +1,7 @@
 package main;
 
 import java.util.*;
+import javax.swing.*;
 
 public class Main {
 
@@ -10,6 +11,8 @@ public class Main {
 	static Researcher researcher;
 	static int generation = 0;
 
+	static Frame frame = new Frame();
+
 	static int killedByPesticide = 0;
 	static int killedByNature = 0;
 
@@ -18,6 +21,8 @@ public class Main {
 
 		for (int i = 0; i < 100; i++) {
 			// scanner.nextLine(); // Wait for [ENTER] to proceed
+			long startTime = System.currentTimeMillis();
+			while(System.currentTimeMillis() - startTime < Constants.REFRESH_DELAY);
 			System.out.println("");
 			periodic();
 		}
@@ -44,13 +49,14 @@ public class Main {
 	private static void periodic() {
 		generation++;
 		pesticideResearch();
-//		log();
+		// log();
 		pesticideSeason();
 		System.out.print("Generation: " + generation + "\tSurvivors: " + pestList.size());
 		checkEnd();
 		matingSeason();
 		carryingCapacity();
 		checkEnd();
+		graphics();
 	}
 
 	private static void log() {
@@ -158,12 +164,20 @@ public class Main {
 		killedByNature += pestsToRemoveList.size();
 	}
 
+	private static void graphics() {
+		frame.paintPests();
+	}
+
 	public static boolean randomize(double numerator, double denominator) {
 		return Math.random() <= numerator / denominator;
 	}
 
 	public static boolean randomize(double percent) {
 		return randomize(percent, 100);
+	}
+
+	public static double random(double number) {
+		return (Math.random() * number) + 1;
 	}
 
 }

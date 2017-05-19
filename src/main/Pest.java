@@ -1,6 +1,6 @@
 package main;
 
-public class Pest {
+public class Pest{
 	
 	private int[] dna = new int[Constants.DNA_LENGTH];
 
