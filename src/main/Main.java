@@ -7,6 +7,7 @@ public class Main {
 
 	static Scanner scanner = new Scanner(System.in);
 	static ArrayList<Pest> pestList = new ArrayList<Pest>(Constants.STARTING_PEST_COUNT);
+	static int[] survivorCount = new int[Constants.TOTAL_NUMBER_OF_YEARS + 1];
 	static Pesticide pesticide;
 	static Researcher researcher;
 	static int generation = 0;
@@ -19,7 +20,7 @@ public class Main {
 	public static void main(String[] args) {
 		init();
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < Constants.TOTAL_NUMBER_OF_YEARS; i++) {
 			// scanner.nextLine(); // Wait for [ENTER] to proceed
 			long startTime = System.currentTimeMillis();
 			while(System.currentTimeMillis() - startTime < Constants.REFRESH_DELAY);
@@ -52,6 +53,7 @@ public class Main {
 		// log();
 		pesticideSeason();
 		System.out.print("Generation: " + generation + "\tSurvivors: " + pestList.size());
+		survivorCount[generation] = pestList.size();
 		checkEnd();
 		matingSeason();
 		carryingCapacity();
