@@ -15,6 +15,7 @@ public class Constants {
 	static final int PEST_CARRYING_CAPACITY = 10000;
 	static final int REFRESH_DELAY = 1000;
 	static final int PEST_SIZE = 5;
+	static final int TOTAL_NUMBER_OF_YEARS = 100;
 	
 	static final String LOGGER_LOCATION = "LoggerFiles";
 }
