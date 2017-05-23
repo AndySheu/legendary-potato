@@ -35,6 +35,9 @@ public class Frame extends JFrame {
 	private void drawTime(Graphics g){
 		g.setColor(new Color(255,255,255));
 		g.drawString("GEN:"+Main.generation+"\tALIVE:"+Main.pestList.size(), 100, 100);
+		if(Main.generation%Constants.RESEARCH_TIME==0){
+			g.drawString("Pesticide Effectiveness = "+Main.effectiveness+"%", 100, 115);
+		}
 	}
 
 }
