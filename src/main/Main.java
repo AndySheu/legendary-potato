@@ -93,7 +93,7 @@ public class Main {
 		popPost = pestList.size();
 		effectiveness = 100*(double)(1-((double)popPost/(double)popPre));
 		if(generation%Constants.RESEARCH_TIME==0){
-			System.out.printf("Pesticide is %.2f%% effective\n",effectiveness);
+			System.out.println("Pesticide is "+truncate(effectiveness,2)+"% effective");
 		}
 
 		killedByPesticide += pestsToRemoveList.size();
@@ -190,6 +190,11 @@ public class Main {
 
 	public static double random(double number) {
 		return (Math.random() * number) + 1;
+	}
+	
+	public static double truncate(double num,int place){
+		int temp = (int) (num*(Math.pow(10, place)));
+		return (double)temp/Math.pow(10,place);
 	}
 
 }
