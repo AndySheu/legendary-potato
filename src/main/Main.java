@@ -11,6 +11,8 @@ public class Main {
 	static Pesticide pesticide;
 	static Researcher researcher;
 	static int generation = 0;
+	static double effectiveness = 0.00;
+
 
 	static Frame frame = new Frame();
 
@@ -73,17 +75,25 @@ public class Main {
 
 	private static void pesticideSeason() {
 		ArrayList<Pest> pestsToRemoveList = new ArrayList<Pest>(pestList.size());
-
+		int popPre = pestList.size();
+		int popPost;
+		
 		// determine which pests should be killed by the pesticide
 		for (Pest p : pestList) {
 			if (p.applyPesticide(pesticide)) {
 				pestsToRemoveList.add(p);
 			}
 		}
+		
 
 		// kill pests
 		for (Pest p : pestsToRemoveList) {
 			pestList.remove(p);
+		}
+		popPost = pestList.size();
+		effectiveness = 100*(double)(1-((double)popPost/(double)popPre));
+		if(generation%Constants.RESEARCH_TIME==0){
+			System.out.printf("Pesticide is %.2f%% effective\n",effectiveness);
 		}
 
 		killedByPesticide += pestsToRemoveList.size();
