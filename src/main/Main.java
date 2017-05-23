@@ -13,7 +13,6 @@ public class Main {
 	static int generation = 0;
 	static double effectiveness = 0.00;
 
-
 	static Frame frame = new Frame();
 
 	static int killedByPesticide = 0;
@@ -25,7 +24,8 @@ public class Main {
 		for (int i = 0; i < Constants.TOTAL_NUMBER_OF_YEARS; i++) {
 			// scanner.nextLine(); // Wait for [ENTER] to proceed
 			long startTime = System.currentTimeMillis();
-			while(System.currentTimeMillis() - startTime < Constants.REFRESH_DELAY);
+			while (System.currentTimeMillis() - startTime < Constants.REFRESH_DELAY)
+				;
 			System.out.println("");
 			periodic();
 		}
@@ -77,23 +77,22 @@ public class Main {
 		ArrayList<Pest> pestsToRemoveList = new ArrayList<Pest>(pestList.size());
 		int popPre = pestList.size();
 		int popPost;
-		
+
 		// determine which pests should be killed by the pesticide
 		for (Pest p : pestList) {
 			if (p.applyPesticide(pesticide)) {
 				pestsToRemoveList.add(p);
 			}
 		}
-		
 
 		// kill pests
 		for (Pest p : pestsToRemoveList) {
 			pestList.remove(p);
 		}
 		popPost = pestList.size();
-		effectiveness = 100*(double)(1-((double)popPost/(double)popPre));
-		if(generation%Constants.RESEARCH_TIME==0){
-			System.out.println("Pesticide is "+truncate(effectiveness,2)+"% effective");
+		effectiveness = 100 * (double) (1 - ((double) popPost / (double) popPre));
+		if (generation % Constants.RESEARCH_TIME == 0) {
+			System.out.println("Pesticide is " + truncate(effectiveness, 2) + "% effective");
 		}
 
 		killedByPesticide += pestsToRemoveList.size();
@@ -125,7 +124,8 @@ public class Main {
 		for (int i = 0; i < Constants.MATING_CYCLES_PER_PESTICIDE_APPLICATION; i++) {
 			ArrayList<Pest> newPestList = new ArrayList<Pest>(pestList.size());
 			for (Pest p : pestList) {
-				// if (pestList.size() + newPestList.size() < Constants.PEST_CARRYING_CAPACITY) {
+				// if (pestList.size() + newPestList.size() <
+				// Constants.PEST_CARRYING_CAPACITY) {
 				newPestList.add(new Pest(p.getDNA()));
 				p.radioactiveMutation();
 				// }
@@ -157,7 +157,8 @@ public class Main {
 			 * 100\log _2\left(\frac{x}{C}\right)
 			 */
 
-			// if (randomize(60. * (Math.log((double) i / Constants.PEST_CARRYING_CAPACITY)) /
+			// if (randomize(60. * (Math.log((double) i /
+			// Constants.PEST_CARRYING_CAPACITY)) /
 			// (Math.log(2)))) {
 			if (randomize(Math.sqrt((double) i - (0.7 * Constants.PEST_CARRYING_CAPACITY)))) {
 				/*
@@ -191,10 +192,24 @@ public class Main {
 	public static double random(double number) {
 		return (Math.random() * number) + 1;
 	}
-	
-	public static double truncate(double num,int place){
-		int temp = (int) (num*(Math.pow(10, place)));
-		return (double)temp/Math.pow(10,place);
+
+	public static double truncate(double num, int place) {
+		int temp = (int) (num * (Math.pow(10, place)));
+		return (double) temp / Math.pow(10, place);
+	}
+
+	// commifies numbers with commas
+	public static String revolutionize(int num) {
+		String value = "";
+		while (num > 0) {
+			if (value == "") {
+				value = String.valueOf(num % 1000);
+			} else {
+				value = String.valueOf(num % 1000) + "," + value;
+			}
+			num = (num - (num % 1000)) / 1000;
+		}
+		return value;
 	}
 
 }
